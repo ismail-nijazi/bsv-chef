@@ -5,7 +5,6 @@ from src.static.diets import Diet
 
 @pytest.fixture
 def receipe_controller():
-    # Create an instance of ReceipeController
     controller = ReceipeController(items_dao=None)
     return controller
 
@@ -20,17 +19,15 @@ def test_data():
 @pytest.mark.unit
 @patch('src.controllers.receipecontroller.calculate_readiness')
 def test_receipe_not_available_readiness_above_0_1(mock_calculate_readiness, receipe_controller, test_data):
-    # Test case 1: receipe is not available and readiness is above 0.1
     receipe, available_items, diet = test_data
     receipe['diets'] = ['vegan']
-    mock_calculate_readiness.return_value = 0.5  # Mock the calculate_readiness function
+    mock_calculate_readiness.return_value = 0.5  
     result = receipe_controller.get_receipe_readiness(receipe, available_items, diet)
     assert result is None
     
 @pytest.mark.unit
 @patch('src.controllers.receipecontroller.calculate_readiness')
 def test_receipe_not_available_readiness_below_0_1(mock_calculate_readiness, receipe_controller, test_data):
-    # Test case 2: receipe is not available and readiness is below 0.1
     receipe, available_items, diet = test_data
     receipe['diets'] = ['vegan']
     mock_calculate_readiness.return_value = 0.05  # Mock the calculate_readiness function
@@ -42,15 +39,14 @@ def test_receipe_not_available_readiness_below_0_1(mock_calculate_readiness, rec
 def test_receipe_available_readiness_above_0_1(mock_calculate_readiness, receipe_controller, test_data):
     # Test case 3: receipe is available and readiness is above 0.1
     receipe, available_items, diet = test_data
-    mock_calculate_readiness.return_value = 0.8  # Mock the calculate_readiness function
+    mock_calculate_readiness.return_value = 0.8  
     result = receipe_controller.get_receipe_readiness(receipe, available_items, diet)
     assert result == 0.8
 
 @pytest.mark.unit
 @patch('src.controllers.receipecontroller.calculate_readiness')
 def test_receipe_available_readiness_below_0_1(mock_calculate_readiness, receipe_controller, test_data):
-    # Test case 4: receipe is available and readiness is below 0.1
     receipe, available_items, diet = test_data
-    mock_calculate_readiness.return_value = 0.05  # Mock the calculate_readiness function
+    mock_calculate_readiness.return_value = 0.05  
     result = receipe_controller.get_receipe_readiness(receipe, available_items, diet)
     assert result is None
