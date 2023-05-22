@@ -2,6 +2,7 @@ import pytest
 from unittest.mock import patch
 from src.controllers.receipecontroller import ReceipeController
 from src.static.diets import Diet
+from src.static.diets import from_string
 
 @pytest.fixture
 def receipe_controller():
@@ -11,9 +12,9 @@ def receipe_controller():
 
 @pytest.fixture
 def test_data():
-    receipe = {'diets': ['vegetarian']}
+    receipe = {'diets': ["vegetarian"]}
     available_items = {}
-    diet = Diet('vegetarian')
+    diet = Diet(from_string("vegetarian"))
     return receipe, available_items, diet
 
 @pytest.mark.unit
